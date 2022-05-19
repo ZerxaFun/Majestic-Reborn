@@ -3,7 +3,7 @@
  * Возвращение главной страницы модуля Backend
  * @url /backend
  */
-Route::get('/test', [
+Route::get('/', [
     'controller'	=>  'FrontendController',
     'action'		=>  'home',
 ]);

@@ -90,7 +90,7 @@ class Router
        
         if(mb_strtolower($module->type) === 'module') {
             # Если есть макет для обработки, то подключаем его
-            $layout = $module->instance()->layout;
+            $layout = $module->instance()::$layout;
             # Вывод данных
             if ($layout !== '') {
                 echo Layout::get($layout);
@@ -152,11 +152,12 @@ class Router
         static::rewrite();
     }
 
-	/**
-	 * Переписывает маршруты приложения.
-	 *
-	 * @return void
-	 */
+    /**
+     * Переписывает маршруты приложения.
+     *
+     * @return void
+     * @throws Exception
+     */
 	private static function rewrite(): void
     {
 		foreach (Repository::stored() as $method => $routes) {

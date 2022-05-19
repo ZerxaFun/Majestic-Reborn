@@ -1,6 +1,5 @@
 <?php
 
-use Core\Services\Auth\Auth;
 use Core\Services\Template\Theme\Theme;
 
 

@@ -3,18 +3,15 @@
  * Возвращение главной страницы модуля Backend
  * @url /backend
  */
-Route::get('/', [
-    'controller'	=>  'BackendController',
-    'action'		=>  'home'
-]);
-
 Route::get('/admin', [
-    'controller'	=>  'BackendController',
-    'action'		=>  'dashboard',
-    'map'           => false
+    'controller'	=>  'HomeController',
+    'action'		=>  'home',
 ]);
 
-Route::get('/admin/login', [
-    'controller'	=>  'BackendController',
-    'action'		=>  'login'
+/**
+ * Страница авторизации пользователя.
+ */
+Route::get('/admin/account/signin', [
+    'controller'	=>  'AccountController',
+    'action'		=>  'signin'
 ]);

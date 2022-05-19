@@ -42,7 +42,6 @@ class ErrorHandler
      */
     public function __construct()
     {
-
         set_error_handler('Core\Services\ErrorHandler\ErrorHandler::error');
         register_shutdown_function('Core\Services\ErrorHandler\ErrorHandler::fatal');
         set_exception_handler('Core\Services\ErrorHandler\ErrorHandler::exception');
@@ -142,13 +141,13 @@ class ErrorHandler
      */
     private static function highlightString(string $string): string
     {
-        $search = array("\r\n", "\n\r", "\r", "\n",
+        $search = ["\r\n", "\n\r", "\r", "\n",
             '<code>', '</code>',
             '#$@r4!/*',
             '<span style="color: #0000BB">&lt;?php&nbsp;',
             '<span style="color: #0000BB">',
             '<span style="color: #007700">',
-        );
+        ];
         $replace = array('', '', '', '',
             '', '',
             '/*',
@@ -168,7 +167,7 @@ class ErrorHandler
      */
     private static function formatBacktrace(array $backtrace): array
     {
-        if (is_array($backtrace) === false || count($backtrace) === 0) {
+        if (count($backtrace) === 0) {
             return $backtrace;
         }
 

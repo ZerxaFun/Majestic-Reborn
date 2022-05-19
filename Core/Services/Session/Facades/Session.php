@@ -13,7 +13,7 @@ class Session
     /**
      * @var SessionDriver The session class instance.
      */
-    protected static $session;
+    public static $session;
 
     /**
      * Initializes the session.

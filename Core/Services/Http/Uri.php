@@ -173,6 +173,6 @@ class Uri
      */
     public static function segmentString(): string
 	{
-        return (string) implode('/', static::$segments);
+        return implode('/', static::$segments);
     }
 }

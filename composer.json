@@ -17,8 +17,11 @@
         }
     ],
     "require": {
-      "ext-mbstring": "*",
-      "ext-pdo": "*"
-    },
-    "require-dev": {}
+        "php": "^8.0",
+        "ext-mbstring": "*",
+        "ext-pdo": "*",
+        "psr/log": "^3.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-client": "^1.0"
+    }
 }
