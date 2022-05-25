@@ -170,7 +170,7 @@ abstract class AbstractDumper implements DataDumperInterface, DumperInterface
     /**
      * Generic line dumper callback.
      */
-    protected function echoLine(string $line, int $depth, string $indentPad)
+    protected function echoLine(string $line, int $depth, string $indentPad): void
     {
         if (-1 !== $depth) {
             fwrite($this->outputStream, str_repeat($indentPad, $depth).$line."\n");

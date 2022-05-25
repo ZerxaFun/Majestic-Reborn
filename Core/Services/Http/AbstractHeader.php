@@ -35,16 +35,15 @@ abstract class AbstractHeader
      *
      * @var array - тип HTTP запроса к роутеру
      */
-    protected array $type = [
+    protected static array $type = [
         'html'      =>  'text/html',        # 	text/html           - .html
         'json'      =>  'application/json', # 	text/css            - .css
-        'css'       =>  'text/css'         # 	text/css            - .css
     ];
 
     /**
      * @var string - кодировка страниц
      */
-    protected string $charset = 'charset=utf-8';
+    protected static string $charset = 'charset=utf-8';
 
 
 }

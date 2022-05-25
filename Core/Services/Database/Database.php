@@ -31,26 +31,26 @@ class Database
 {
 
     /**
-     * @var mixed $connection
+     * @var mixed|null $connection
      */
-    protected static $connection;
+    private static mixed $connection;
 
     /**
-     * Получение текущего соеденение с базой данных.
+     * Получение текущего соединение с базой данных.
      *
      * @return PDO
      */
-    public static function connection()
+    public static function connection(): PDO
     {
         return static::$connection;
     }
 
     /**
-     * Инициализация коннекта к базе данных.
+     * Инициализация соединения к базе данных.
      *
      * @throws Exception
      */
-    public static function initialize()
+    public static function initialize(): void
     {
         static::$connection = static::connect();
     }
@@ -71,7 +71,8 @@ class Database
      * @return null|PDO
      * @throws Exception
      */
-    private static function connect() {
+    private static function connect(): ?PDO
+    {
         /**
          * Получение параметров для подключения к базе данных
          *
@@ -84,6 +85,7 @@ class Database
          * @var $dsn        - DNS базы данных
          * @var $options    - Опции @PDO
          */
+
         $driver     = $_ENV['db_driver'];
         $host       = $_ENV['db_host'];
         $username   = $_ENV['db_username'];
@@ -109,11 +111,11 @@ class Database
         try {
             $connection = new PDO($dsn, $username, $password, $options);
         } catch (PDOException $error) {
-            throw new \RuntimeException($error->getMessage());
+            throw new RuntimeException($error->getMessage());
         }
 
         /**
-         * Возврат соеденение к базе данных в случаи успеха.
+         * Возврат соединение к базе данных в случаи успеха.
          */
         return $connection;
     }

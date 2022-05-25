@@ -2,14 +2,16 @@
 
 namespace Modules\Backend\Controller;
 
+use Core\Services\JWT\JWT;
 use View;
 
 class AccountController extends BackendController
 {
     public static string $layout = 'login/login';
 
-    public function signin(): View
+
+    final public function signin()
     {
-        return View::make('login/w');
+
     }
 }

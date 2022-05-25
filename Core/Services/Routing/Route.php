@@ -33,9 +33,9 @@ class Route extends RouteAbstract
      * @param array   $options - варианты маршрута.
      * @return bool
      */
-    public static function get(string $uri, array $options): bool
+    public static function get(string $uri, array $options, bool $cache = false): bool
     {
-        return static::add('get', $uri, $options);
+        return static::add('get', $uri, $options, $cache);
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 
 use Core\Services\DevDumper\DevDumper;
+use JetBrains\PhpStorm\NoReturn;
 
 if (!function_exists('dump')) {
     function dump($var, ...$moreVars) {
@@ -19,7 +20,8 @@ if (!function_exists('dump')) {
 }
 
 if (!function_exists('dd')) {
-    #[NoReturn] function dd(...$vars) {
+    #[NoReturn] function dd(...$vars): void
+    {
         foreach ($vars as $v) {
             DevDumper::dump($v);
         }

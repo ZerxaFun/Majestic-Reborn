@@ -51,6 +51,11 @@ class Language
     public static function getBrowserLang(): string
     {
        self::BrowserLang();
+
+       if(self::BrowserLang() === null) {
+           self::$language = '';
+       }
+
        return self::$language;
     }
 
@@ -59,17 +64,13 @@ class Language
         /**
          * Получение языка HTTP заголовка браузера
          */
-        $user_pref_lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        if(array_key_exists('HTTP_ACCEPT_LANGUAGE', $_SERVER)) {
+            $user_pref_lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
 
-
-        foreach($user_pref_lang as $lang) {
-
-            $lang = substr($lang, 0, 2);
-
+            foreach($user_pref_lang as $lang) {
+                $lang = substr($lang, 0, 2);
                 self::$language = $lang;
-
-
+            }
         }
-
     }
 }

@@ -53,33 +53,8 @@ class Setting
      */
     public static function value(string $key, string $section = 'general'): string
     {
-        $item = static::item($key, $section);
+        $item = static::item(key: $key, section: $section);
 
         return $item->value ?? '';
-    }
-
-    /**
-     * @param string $section
-     * @return bool
-     * @throws Exception
-     */
-    public static function get(string $section): bool
-    {
-        $settings = SettingDatabase::select()
-            ->where('section', '=', $section)
-            ->all();
-        // Items must be an array.
-        if (!empty($settings)) {
-            // Store items.
-            foreach ($settings as $value) {
-                Repository::store($section, $value);
-            }
-
-            // Successful settings load.
-            return true;
-        }
-
-        // Settings load unsuccessful.
-        return false;
     }
 }

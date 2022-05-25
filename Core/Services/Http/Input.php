@@ -27,8 +27,8 @@ class Input
      * @param bool|mixed $key
      * @return array|mixed
      */
-    public static function get($key = false)
-	{
+    public static function get($key = false): mixed
+    {
         return $key ? static::getParam($key, $_GET) : $_GET;
     }
 

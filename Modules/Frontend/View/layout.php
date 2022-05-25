@@ -1,6 +1,7 @@
 <?php
 
 $tpl = new Theme;
+
 $tpl->get('layout.mjt');
 
 # Вывод результата

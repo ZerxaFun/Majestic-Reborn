@@ -16,6 +16,7 @@
 
 namespace Core\Services\Config;
 
+use Core\Services\Path\Path;
 use RuntimeException;
 
 
@@ -70,7 +71,7 @@ final class Config
      */
     private static function file(string $group = 'main'): void
     {
-        $path =  '../Config' . DIRECTORY_SEPARATOR . $group . '.php';
+        $path =  Path::config() . $group . '.php';
 
         /**
          * Проверка, действительно ли существует файл
@@ -100,7 +101,7 @@ final class Config
 
             throw new RuntimeException(
                 sprintf(
-                    'Конфигурационный файл <strong>%s</strong> не является массивом.',
+                    'Конфигурационный файл %s не является массивом.',
                     $path
                 )
             );
@@ -108,7 +109,7 @@ final class Config
 
         throw new RuntimeException(
             sprintf(
-                'Невозможно загрузить файл конфигурации <strong>%s</strong>, возможно его не существует.',
+                'Невозможно загрузить файл конфигурации %s, возможно его не существует.',
                 $path
             )
         );

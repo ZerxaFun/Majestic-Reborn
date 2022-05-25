@@ -35,14 +35,14 @@ class Statement
      *
      * @var string
      */
-    protected string $sql = '';
+    private string $sql = '';
 
     /**
      * PDO statement
      *
-     * @var object
+     * @var object|null
      */
-    protected object $stmt;
+    private ?object $stmt;
 
     /**
      * Statement конструктор.
@@ -52,7 +52,7 @@ class Statement
     public function __construct(string $sql = '')
     {
         /**
-         * Если @sql запрос не пуст, то вызываем $this->prepare() и передаем запрос
+         * Если @sql Запрос не пуст, то вызываем $this->prepare() и передаем запрос
          */
         if ($sql !== '') {
             $this->prepare($sql);
@@ -65,7 +65,7 @@ class Statement
      * @param  string  $sql.
      * @return Statement
      */
-    public function prepare(string $sql): Statement
+    final public function prepare(string $sql): Statement
     {
         /**
          * Подготовка отправки запроса
@@ -91,7 +91,7 @@ class Statement
      * @param int $type
      * @return Statement
      */
-    public function bind($parameter, $value, int $type = 0): Statement
+    final public function bind($parameter, $value, int $type = 0): Statement
     {
         /**
          * Определение типа подключения к базе данных
@@ -122,7 +122,7 @@ class Statement
      *
      * @return mixed
      */
-    public function execute()
+    public function execute(): mixed
     {
         try {
             return $this->stmt->execute();
@@ -142,7 +142,7 @@ class Statement
      *
      * @return object|bool
      */
-    public function fetch()
+    final public function fetch(): object|bool
     {
         return $this->stmt->fetch(PDO::FETCH_OBJ);
     }
@@ -152,7 +152,7 @@ class Statement
      *
      * @return array
      */
-    public function all(): array
+    final public function all(): array
     {
         return $this->stmt->fetchAll(PDO::FETCH_OBJ);
     }
@@ -162,17 +162,17 @@ class Statement
      *
      * @return int
      */
-    public function count(): int
+    final public function count(): int
     {
         return $this->stmt->rowCount();
     }
 
     /**
-     * Возвращаение ошибки при SQL запросе.
+     * Возвращение ошибки при SQL запросе.
      *
      * @return array
      */
-    public function errors(): array
+    final public function errors(): array
     {
         return $this->stmt->errorInfo();
     }

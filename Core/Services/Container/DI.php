@@ -30,7 +30,6 @@ use JetBrains\PhpStorm\Pure;
 /**
  * Класс зависимостей Dependency Injection
  *
- * @property facade
  * @package Core\Services\Container
  */
 class DI
@@ -66,7 +65,7 @@ class DI
      * @param string $key
      * @return mixed
      */
-    #[Pure] final public function get(string $key): mixed
+    final public function get(string $key): mixed
     {
         return $this->has($key) ? $this->$key : false;
     }

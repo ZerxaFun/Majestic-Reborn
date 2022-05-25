@@ -104,7 +104,6 @@ class Theme extends AbstractTheme
 
             return "";
         }
-
         if($mjt_name === '' || !file_exists($this->dir . $mjt_name)) {
             $this->template = "Шаблон не найден: "
                 . str_replace(Path::base(), '', $this->dir)

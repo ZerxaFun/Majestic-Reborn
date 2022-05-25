@@ -17,8 +17,11 @@
 namespace Core\Services\Routing;
 
 
+use Core\Services\Http\Header;
+use Core\Services\Http\ResponseCode;
 use Core\Services\Http\Uri;
 use Core\Services\Routing\Modules\Language;
+use Core\Services\Routing\Response\ConditionModule;
 use Exception;
 
 /**
@@ -49,11 +52,12 @@ class Repository
      * @param string $method - метод запроса маршрута.
      * @param string $uri - URI маршрута.
      * @param array $options - варианты маршрута.
+     * @param bool $cache
      * @return void
      *
      * @throws Exception
      */
-    public static function store(string $method, string $uri, array $options): void
+    public static function store(string $method, string $uri, array $options, bool $cache = false): void
     {
         $languageTag = Language::module();
 
@@ -64,8 +68,9 @@ class Repository
                 $prefix = $tag . '/';
             }
 
-            static::$stored[$options['module']]['route'][$tag][$prefix . $uri][$method] = $options;
+            static::$stored[$options['module']]['route'][$tag][$prefix . $uri][$method] =  array_merge($options, ['cache' => $cache]);
         }
+
     }
 
     /**
@@ -105,19 +110,18 @@ class Repository
                 }
 
                 $error = Router::$status = [
-                    'http' => '404',
+                    'http' => 404,
                     'module' => $module,
                     'controller' => 'ErrorController',
                     'action' => 'page404'
                 ];
-
                 continue;
             }
 
             $stored = $moduleStore[$modules][$uri][$method];
 
             $routes = Router::$status = [
-                'http' => '200',
+                'http' =>  200,
                 'module' => $modules,
                 'controller' => $stored['controller'],
                 'action' => $stored['action']
@@ -125,10 +129,16 @@ class Repository
 
         }
 
+
+        $response = $routes ?? $error;
+
+
+        ConditionModule::setCodeStatus($response['http']);
+
         /**
          * Вернуть пути по методу и ЮРЛ
          */
-        return $routes ?? $error;
+        return $response;
     }
 
     /**

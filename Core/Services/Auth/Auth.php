@@ -38,9 +38,9 @@ class Auth
     /**
      * Аутентифицированный пользователь.
      *
-     * @var object
+     * @var ?object
      */
-    private static object $user;
+    private static ?object $user;
 
     /**
      * Инициализация авторизации

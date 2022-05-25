@@ -15,6 +15,9 @@
 
 namespace Core\Services\Template\Theme;
 
+use Core\Services\Path\Path;
+use Core\Services\Routing\Module;
+use Core\Services\Routing\Router;
 use DI;
 
 /**
@@ -64,9 +67,9 @@ abstract class AbstractTheme
 
     public function __construct()
     {
-        $module = DI::instance()->get('module');
+        $module = Router::module();
 
-        $this->dir = $module['this']->theme['dir'] . DIRECTORY_SEPARATOR;
+        $this->dir = Path::theme($module->module . DIRECTORY_SEPARATOR . $module->manifest['setting']['theme']);
     }
 
     /**

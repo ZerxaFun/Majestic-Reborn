@@ -12,6 +12,7 @@
 namespace Core\Services\Template;
 
 use Core;
+use Core\Services\Routing\APIController;
 use Core\Services\Routing\Router;
 use Exception;
 use RuntimeException;
@@ -38,8 +39,9 @@ class View
      */
 	public const TEMPLATE_EXTENSION = '.php';
 	private static Engine $engine;
+    private string|false $json;
 
-	/**
+    /**
 	 * View constructor.
 	 */
 	public function __construct()
@@ -121,6 +123,16 @@ class View
 		return $class;
 	}
 
+    private function encode(): bool|string
+    {
+        $this->json = json_encode($this->data, JSON_THROW_ON_ERROR);
+
+        return $this->json;
+    }
+
+    public function json()
+    {
+    }
     /**
      * @param string $path
      * @param array $data

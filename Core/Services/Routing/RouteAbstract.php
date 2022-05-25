@@ -39,14 +39,15 @@ abstract class RouteAbstract
     /**
      * Добавление роута.
      *
-     * @param  string  $method - метод маршрута,
-     * @param  string  $uri - URI для маршрутизации.
-     * @param  array  $options - варианты маршрута.
+     * @param string $method - метод маршрута,
+     * @param string $uri - URI для маршрутизации.
+     * @param array $options - варианты маршрута.
+     * @param bool $cache
      * @return bool
+     * @throws Exception
      */
-    protected static function add(string $method, string $uri, array $options): bool
+    protected static function add(string $method, string $uri, array $options, bool $cache = false): bool
     {
-
         if (static::validateOptions($options)) {
             # Установить модуль.
             if (!isset($options['module'])) {
@@ -54,7 +55,7 @@ abstract class RouteAbstract
             }
 
             # Установить маршрут.
-            Repository::store($method, static::prefixed($uri), $options);
+            Repository::store($method, static::prefixed($uri), $options, $cache);
 
             return true;
         }

@@ -3,6 +3,7 @@
 namespace Modules\Frontend\Controller;
 
 use Controller;
+use View;
 
 /**
  * Class BackendController
@@ -11,9 +12,9 @@ use Controller;
  */
 class ErrorController extends FrontendController
 {
-
-    public function page404()
+    public function page404(): View
     {
-
+        echo 5;
+        return View::make('d');
     }
 }

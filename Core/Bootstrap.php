@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace Core;
 
 
-use Core\Services\Auth\Auth;
 use Core\Services\Client\Client;
 use Core\Services\Container\DI;
 use Core\Services\Database\Database;
@@ -72,77 +71,41 @@ class Bootstrap
         /**
          * Инициализация сессий.
          */
-        $start = microtime(true);
-
-
         Session::initialize();
-        $stop = microtime(true) - $start;
-        printf('Скрипт Session выполнялся %.4F сек. <br>', $stop);
-        $res = $stop;
-        $start = microtime(true);
 
         /**
          * Инициализация клиента.
          */
         Client::initialize();
-        $stop = microtime(true) - $start;
-        printf('Скрипт Client выполнялся %.4F сек. <br>', $stop);$res = $res + $stop;
-
-        $start = microtime(true);
 
         /**
          * Инициализация URI.
          */
         Uri::initialize();
-        $stop = microtime(true) - $start;
-        printf('Скрипт Uri выполнялся %.4F сек. <br>', $stop);$res = $res + $stop;
-        $start = microtime(true);
 
         /**
          * Правильный вывод ошибок
          */
         ErrorHandler::initialize();
-        $stop = microtime(true) - $start;
-        printf('Скрипт ErrorHandler выполнялся %.4F сек. <br>', $stop);$res = $res + $stop;
-        $start = microtime(true);
 
         /**
          * Парсинг .env файлов окружения
          */
         Dotenv::initialize();
-        $stop = microtime(true) - $start;
-        printf('Скрипт Dotenv выполнялся %.4F сек. <br>', $stop);$res = $res + $stop;
-        $start = microtime(true);
 
         /**
          * Подключение к базе данных.
          */
         Database::initialize();
-        $stop = microtime(true) - $start;
-        printf('Скрипт Dotenv выполнялся %.4F сек. <br>', $stop);$res = $res + $stop;
-        $start = microtime(true);
-
-        Auth::initialize();
-        $stop = microtime(true) - $start;
-        printf('Скрипт Dotenv выполнялся %.4F сек. <br>', $stop);$res = $res + $stop;
-        $start = microtime(true);
 
         /**
          * Подключение MVC паттерна
          */
         Router::initialize();
-        $stop = microtime(true) - $start;
-        printf('Скрипт Router выполнялся %.4F сек. <br>', $stop);$res = $res + $stop;
-        $start = microtime(true);
 
         /**
          * Закрытие подключения к базе данных после окончания запроса.
          */
         Database::finalize();
-        $stop = microtime(true) - $start;
-        printf('Скрипт Database::finalize выполнялся %.4F сек. <br>', $stop);$res = $res + $stop;
-
-        printf('Скрипт выполнялся %.4F сек. <br>', $res);
     }
-
 }

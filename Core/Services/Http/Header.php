@@ -17,6 +17,9 @@
 namespace Core\Services\Http;
 
 
+use Core\Services\Routing\ModuleStatus;
+use Core\Services\Routing\Response\ConditionModule;
+
 /**
  * Класс для работы с заголовком браузера
  *
@@ -34,13 +37,13 @@ class Header extends AbstractHeader
      *
      * @param string $header - заголовок страницы
      */
-    public function header (string $header = ''): void
+    public static function header (string $header = ''): void
     {
-        if(array_key_exists($header, $this->type) === false) {
+        if(array_key_exists($header, self::$type) === false) {
             $header = 'html';
         }
 
-        $this->construct($this->type[$header]);
+        self::construct(self::$type[$header]);
     }
 
     /**
@@ -49,19 +52,36 @@ class Header extends AbstractHeader
      *
      * @param string $header    - заголовок страницы, HTML, json и так далее
      */
-    private function construct(string $header): void
+    private static function construct(string $header): void
     {
-        header('Content-Type: ' . $header . ' . ' . $this->charset);
+        header('Content-Type: ' . $header . ' . ' . self::$charset);
     }
 
-    /**
-     * Отправка кода 404, страница не найдена
-     *
-     * @return void
-     */
-	public static function code404(): void
-    {
-		header('HTTP/1.1 404 Not Found');
-	}
 
+    public static function code(): void
+    {
+        $code = ConditionModule::getCodeStatus();
+
+        match ($code) {
+            200     => self::code200(),
+            204     => self::code204(),
+            404     => self::code404(),
+        };
+
+    }
+
+    public static function code404(): void
+    {
+        header('HTTP/1.1 404 Not Found');
+    }
+
+    public static function code200(): void
+    {
+        header('HTTP/1.1 200 OK');
+    }
+
+    public static function code204(): void
+    {
+        header('HTTP/1.1 204 NO CONTENT');
+    }
 }

@@ -8,7 +8,7 @@ use Core\Services\Path\Path;
 
 class Dotenv
 {
-    private const REGEX = '(?i:[A-Z][A-Z0-9_]*+)';
+    private const REGEX = '(?i:[A-Z][A-Z\d_]*+)';
     private const STATE = 0;
     private const STATE_VALUE = 1;
 

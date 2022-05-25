@@ -15,6 +15,7 @@
 
 namespace Core\Services\Routing;
 
+use Core\Services\Http\Header;
 use Core\Services\Http\Request;
 use Core\Services\Http\Uri;
 use Core\Services\Path\Path;
@@ -80,11 +81,16 @@ class Router
 		# Запуск модуля
 		$response = $module->run();
 
-		# Получение ответа
-		if (is_object($response) && method_exists($response, 'respond')) {
-            $response->respond();
-        } else {
-            return;
+		# Получение ответа, если модуль не API и не требует вывода данных в формате JSON
+		if (is_object($response) && method_exists($response, 'respond') && mb_strtolower($module->type) !== 'api') {
+                $response->respond();
+        }
+
+        /**
+         * Получение ответа в формате JSON, если модуль API
+         */
+        if (mb_strtolower($module->type) === 'api') {
+            echo $response->json();
         }
 
        
@@ -96,6 +102,8 @@ class Router
                 echo Layout::get($layout);
             }
         }
+
+        Header::code();
 	}
 
 
